@@ -1,0 +1,9 @@
+node/
+node_modules/
+bower_components/
+src/main/webapp/resources/
+target/
+.project
+.classpath
+.settings
+
