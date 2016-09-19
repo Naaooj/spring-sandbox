@@ -9,6 +9,8 @@
 		<servlet.api.version>3.0.1</servlet.api.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<spring.security.version>4.1.3.RELEASE</spring.security.version>
+		<spring.social.version>1.1.4.RELEASE</spring.social.version>
+		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
 		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
 		<thymeleaf.dialect.version>2.0.1</thymeleaf.dialect.version>
 		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
@@ -70,10 +72,25 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-openid</artifactId>
-		</dependency>
+		
+		<!-- Spring social -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-config</artifactId>
+            <version>${spring.social.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+            <version>${spring.social.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>${spring.social.google.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>
