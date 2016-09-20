@@ -17,6 +17,9 @@ import org.springframework.social.security.AuthenticationNameUserIdSource;
 
 import fr.naoj.spring.sandbox.social.ConnectionSignUpService;
 
+/**
+ * @author Johann Bernez
+ */
 @Configuration
 @EnableSocial
 @PropertySource("classpath:application.properties")

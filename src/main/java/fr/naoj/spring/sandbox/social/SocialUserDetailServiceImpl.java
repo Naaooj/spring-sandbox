@@ -1,6 +1,7 @@
 package fr.naoj.spring.sandbox.social;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
@@ -11,16 +12,15 @@ import org.springframework.social.security.SocialUserDetailsService;
  */
 public class SocialUserDetailServiceImpl implements SocialUserDetailsService {
 
-	private final SocialUserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
 	
-	public SocialUserDetailServiceImpl(SocialUserDetailsService userDetailsService) {
+	public SocialUserDetailServiceImpl(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
 	}
 	
 	@Override
-	public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-		UserDetails userDetails = this.userDetailsService.loadUserByUserId(userId);
+	public SocialUserDetails loadUserByUserId(String userName) throws UsernameNotFoundException {
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
 		return new SocialUser(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
 	}
-
 }
