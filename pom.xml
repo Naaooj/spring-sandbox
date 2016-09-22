@@ -13,6 +13,7 @@
 		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
 		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
 		<thymeleaf.dialect.version>2.0.1</thymeleaf.dialect.version>
+		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
 		<hsqldb.version>2.3.4</hsqldb.version>
 		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
 		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
@@ -74,11 +75,11 @@
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
 
-		<!-- Spring JDBC -->		
+		<!-- Spring JDBC -->
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
 
 		<!-- Spring social -->
 		<dependency>
@@ -93,7 +94,8 @@
 			<version>${spring.social.version}</version>
 		</dependency>
 
-		<!-- Overriding jackson because thymeleaf as a conflict with the one used by google -->
+		<!-- Overriding jackson because thymeleaf as a conflict with the one used 
+			by google -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -111,13 +113,21 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- hsql -->
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+		</dependency>
+
+		<!-- Apache commons lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${apache.commons.lang3.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

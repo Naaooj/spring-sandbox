@@ -1,17 +1,26 @@
 package fr.naoj.spring.sandbox.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurer;
+import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
+import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
+import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 
@@ -23,17 +32,17 @@ import fr.naoj.spring.sandbox.social.ConnectionSignUpService;
 @Configuration
 @EnableSocial
 @PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = {"fr.naoj.spring.sandbox.social"})
 public class SocialConfiguration implements SocialConfigurer {
 
 	@Autowired
-	private ConnectionSignUpService signUpService;
+	private DataSource dataSource;
+	
+	@Autowired
+	private ConnectionSignUpService connectionSignupService;
 	
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfc, Environment env) {
-		GoogleConnectionFactory gcf = new GoogleConnectionFactory(
-                env.getProperty("spring.social.google.appId"),
-                env.getProperty("spring.social.google.appSecret"));
+		GoogleConnectionFactory gcf = new GoogleConnectionFactory(env.getProperty("spring.social.google.clientId"), env.getProperty("spring.social.google.clientSecret"));
         gcf.setScope("email");
         cfc.addConnectionFactory(gcf);
 	}
@@ -45,9 +54,17 @@ public class SocialConfiguration implements SocialConfigurer {
 
 	@Override
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator cfl) {
-		InMemoryUsersConnectionRepository repository = new InMemoryUsersConnectionRepository(cfl);
-		repository.setConnectionSignUp(signUpService);
+//		InMemoryUsersConnectionRepository repository = new InMemoryUsersConnectionRepository(cfl);
+		JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource, cfl, Encryptors.noOpText());
+		repository.setConnectionSignUp(connectionSignupService);
 		return repository;
+	}
+	
+	@Bean
+	@Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
+	public Google google(ConnectionRepository repository) {
+		Connection<Google> connection = repository.findPrimaryConnection(Google.class);
+		return connection != null ? connection.getApi() : null;
 	}
 
 }

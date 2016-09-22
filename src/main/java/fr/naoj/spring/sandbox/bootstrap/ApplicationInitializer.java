@@ -1,30 +1,30 @@
 package fr.naoj.spring.sandbox.bootstrap;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import fr.naoj.spring.sandbox.config.PersistenceConfiguration;
+import fr.naoj.spring.sandbox.config.SecurityConfiguration;
+import fr.naoj.spring.sandbox.config.SocialConfiguration;
+import fr.naoj.spring.sandbox.config.WebConfiguration;
 
 /**
  * @author Johann Bernez
  */
-public class ApplicationInitializer implements WebApplicationInitializer {
+public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext configurationContext = new AnnotationConfigWebApplicationContext();
-		configurationContext.setConfigLocation("fr.naoj.spring.sandbox.config");
-		
-		ContextLoaderListener loaderListener = new ContextLoaderListener(configurationContext);
-		servletContext.addListener(loaderListener);
-		
-		DispatcherServlet dispatcherServlet = new DispatcherServlet(configurationContext);
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", dispatcherServlet);
-		dispatcher.addMapping("/");
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class<?>[]{WebConfiguration.class, PersistenceConfiguration.class, SecurityConfiguration.class, SocialConfiguration.class};
+	}
+
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return null;
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		return new String[]{"/"};
 	}
 
 }
