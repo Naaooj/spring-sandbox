@@ -16,20 +16,37 @@
 		<div id="login" class="container-fluid">
 			<div class="row">
 				<div class="col-sm-12">
-					<form name="f" th:action="@{/authenticate}" method="post">
+					<form class="form-horizontal" name="f" th:action="@{/authenticate}" method="post">
 						<fieldset>
 							<legend>Please Login before accessing any content</legend>
-							<a th:href="@{/auth/google}" class="btn btn-danger btn-fab">Google</a>
+							<p>
+								<a th:href="@{/auth/google}" class="btn btn-primary btn-xs">Google</a>
+							</p>
+							
+							<p>
+								<a th:href="@{/auth/twitter}" class="btn btn-primary btn-xs">Twitter</a>
+							</p>
 							
 							<div th:if="${param.error}" class="alert alert-error">Invalid username and password.</div>
 							<div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
-							<label for="username">Username</label> 
-							<input type="text" id="username" name="username" /> 
-							<label for="password">Password</label>
-							<input type="password" id="password" name="password" />
-							<div class="form-actions">
-								<button type="submit" class="btn">Log in</button>
+							<div class="form-group">
+								<label for="username" class="col-sm-2 control-label">Username</label> 
+								<div class="col-sm-4">
+									<input type="text" id="username" name="username" class="form-control" />
+								</div>
+							</div> 
+							<div class="form-group">
+								<label for="password" class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-4">
+									<input type="password" id="password" name="password" class="form-control" />
+								</div>
 							</div>
+							<div class="form-group form-actions">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn">Log in</button>
+								</div>
+							</div>
+							<div th:include="fragment/exception :: errorInfo"></div>
 						</fieldset>
 					</form>
 				</div>

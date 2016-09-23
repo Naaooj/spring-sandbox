@@ -17,12 +17,12 @@ import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
+import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import fr.naoj.spring.sandbox.social.ConnectionSignUpService;
 
@@ -45,6 +45,9 @@ public class SocialConfiguration implements SocialConfigurer {
 		GoogleConnectionFactory gcf = new GoogleConnectionFactory(env.getProperty("spring.social.google.clientId"), env.getProperty("spring.social.google.clientSecret"));
         gcf.setScope("email");
         cfc.addConnectionFactory(gcf);
+        
+        TwitterConnectionFactory tcf = new TwitterConnectionFactory(env.getProperty("spring.social.twitter.clientId"), env.getProperty("spring.social.twitter.clientSecret"));
+        cfc.addConnectionFactory(tcf);
 	}
 
 	@Override
@@ -54,7 +57,6 @@ public class SocialConfiguration implements SocialConfigurer {
 
 	@Override
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator cfl) {
-//		InMemoryUsersConnectionRepository repository = new InMemoryUsersConnectionRepository(cfl);
 		JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource, cfl, Encryptors.noOpText());
 		repository.setConnectionSignUp(connectionSignupService);
 		return repository;

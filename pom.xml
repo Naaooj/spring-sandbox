@@ -11,6 +11,7 @@
 		<spring.security.version>4.1.3.RELEASE</spring.security.version>
 		<spring.social.version>1.1.4.RELEASE</spring.social.version>
 		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
+		<spring.social.twitter.version>1.1.0.RELEASE</spring.social.twitter.version>
 		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
 		<thymeleaf.dialect.version>2.0.1</thymeleaf.dialect.version>
 		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
@@ -112,6 +113,12 @@
 					<groupId>jackson-databind</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-twitter</artifactId>
+			<version>${spring.social.twitter.version}</version>
 		</dependency>
 
 		<!-- hsql -->
