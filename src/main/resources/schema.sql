@@ -25,15 +25,24 @@ create table UserConnection (
 	refreshToken varchar(512),
 	expireTime bigint,
 	primary key (userId, providerId, providerUserId));
+
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
 
 create table UserProfile (
-  userId varchar(64) not null,
-  email varchar(255),
-  firstName varchar(64),
-  lastName varchar(64),
-  name  varchar(64),
-  username varchar(64),
-  imageUrl varchar(512),
-  primary key (userId));
+	userId varchar(64) not null,
+	email varchar(255),
+	firstName varchar(64),
+	lastName varchar(64),
+	name  varchar(64),
+	username varchar(64),
+	imageUrl varchar(512),
+	primary key (userId));
+	
 create unique index UserProfilePK on UserProfile(userId);
+
+create table persistent_logins (
+	series varchar(64) not null,
+	username varchar(64) not null, 
+	token varchar(64) not null, 
+	last_used timestamp not null,
+	primary key (series));

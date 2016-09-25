@@ -3,6 +3,7 @@ package fr.naoj.spring.sandbox.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,7 +12,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
 
@@ -29,8 +33,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 	
 	@Autowired
+	@Qualifier("sandboxUserDetailsService")
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
+        auth.userDetailsService(userDetailsService);
     }
 	
 	@Override
@@ -62,11 +71,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
                 .deleteCookies("JSESSIONID")
-                .permitAll();
+                .permitAll()
+                .and()
+            .rememberMe()
+            	.rememberMeParameter("remember-me")
+            	.tokenValiditySeconds(86400)
+            	.tokenRepository(persistentTokenRepository());
     }
     
     @Bean
     public SocialUserDetailsService socialUserDetailsService() {
     	return new SocialUserDetailServiceImpl(userDetailsService());
+    }
+    
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+    	JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+    	jdbcTokenRepository.setDataSource(dataSource);
+    	return jdbcTokenRepository;
     }
 }
