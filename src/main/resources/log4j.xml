@@ -16,7 +16,7 @@
     </logger>
 
     <!-- Application Loggers -->
-    <logger name="com.mycompany.myproject">
+    <logger name="fr.naoj.spring.sandbox">
         <level value="info"/>
     </logger>
 

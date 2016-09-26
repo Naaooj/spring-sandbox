@@ -9,15 +9,19 @@
 		<servlet.api.version>3.0.1</servlet.api.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<spring.security.version>4.1.3.RELEASE</spring.security.version>
+		<spring.data.version>1.10.3.RELEASE</spring.data.version>
 		<spring.social.version>1.1.4.RELEASE</spring.social.version>
 		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
 		<spring.social.twitter.version>1.1.0.RELEASE</spring.social.twitter.version>
+		<hibernate.entitymanager.version>5.2.2.Final</hibernate.entitymanager.version>
 		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
 		<thymeleaf.dialect.version>2.0.1</thymeleaf.dialect.version>
 		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
 		<slf4j.api.version>1.7.21</slf4j.api.version>
 		<slf4j.log4j12.version>1.7.21</slf4j.log4j12.version>
 		<hsqldb.version>2.3.4</hsqldb.version>
+		<postgres.version>9.4.1211</postgres.version>
+		<liquibase.version>3.5.2</liquibase.version>
 		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
 		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
 	</properties>
@@ -83,6 +87,26 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
+		
+		<!-- Spring ORM -->
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        
+        <!-- Spring Data -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.version}</version>
+        </dependency>
+        
+        <!-- Hibernate entity manager -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.entitymanager.version}</version>
+        </dependency>
 
 		<!-- Spring social -->
 		<dependency>
@@ -97,8 +121,7 @@
 			<version>${spring.social.version}</version>
 		</dependency>
 
-		<!-- Overriding jackson because thymeleaf as a conflict with the one used 
-			by google -->
+		<!-- Overriding jackson because thymeleaf as a conflict with the one used by google -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -130,6 +153,13 @@
 			<version>${hsqldb.version}</version>
 		</dependency>
 
+		<!-- Postgres -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgres.version}</version>
+		</dependency>
+
 		<!-- Apache commons lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -143,14 +173,20 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.api.version}</version>
 		</dependency>
-		
-		<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.log4j12.version}</version>
-            <scope>runtime</scope>
-        </dependency>
 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.log4j12.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Liquibase -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
