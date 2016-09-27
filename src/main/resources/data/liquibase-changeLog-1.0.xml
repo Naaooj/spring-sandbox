@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog 
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+                       
+  <changeSet author="naaooj" id="changelog-1.0">
+    <createTable tableName="users">
+      <column name="username" type="varchar(64)">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="password" type="varchar(64)">
+      	<constraints nullable="false"/>
+      </column>
+      <column name="enabled" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    
+    <createTable tableName="authorities">
+      <column name="username" type="varchar(64)">
+        <constraints nullable="false" foreignKeyName="fk_authorities_user" references="users(username)"/>
+      </column>
+      <column name="authority" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    
+    <createIndex tableName="authorities" indexName="ix_auth_username" unique="true">
+      <column name="username"/>
+      <column name="authority"/>
+    </createIndex>
+    
+    <createTable tableName="persistent_logins">
+      <column name="series" type="varchar(64)">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="username" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="token" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_used" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    
+    <createTable tableName="userconnection">
+      <column name="userid" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="providerid" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="provideruserid" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="rank" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="displayname" type="varchar(255)"/>
+      <column name="profileurl" type="varchar(512)"/>
+      <column name="imageurl" type="varchar(512)"/>
+      <column name="accesstoken" type="varchar(512)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="secret" type="varchar(512)"/>
+      <column name="refreshtoken" type="varchar(512)"/>
+      <column name="expiretime" type="bigint"/>
+    </createTable>
+    
+    <addPrimaryKey tableName="userconnection" columnNames="userid, providerid, provideruserid"/>
+    
+    <createIndex tableName="userconnection" indexName="ix_connection_rank" unique="true">
+      <column name="userid"/>
+      <column name="providerid"/>
+      <column name="rank"/>
+    </createIndex>
+    
+    <createTable tableName="userprofile">
+      <column name="userid" type="varchar(64)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="email" type="varchar(255)"/>
+      <column name="firstname" type="varchar(64)"/>
+      <column name="lastname" type="varchar(64)"/>
+      <column name="name" type="varchar(64)"/>
+      <column name="username" type="varchar(64)"/>
+      <column name="imageurl" type="varchar(512)"/>
+    </createTable>
+    
+    <createIndex tableName="userprofile" indexName="ix_user_profile_pk" unique="true">
+      <column name="userid"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

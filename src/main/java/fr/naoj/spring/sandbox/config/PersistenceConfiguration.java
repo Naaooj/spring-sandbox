@@ -33,10 +33,10 @@ public class PersistenceConfiguration {
 	@Bean(name = "dataSource")
 	public DataSource dataSource() {
 		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+		dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
 		dataSource.setUrl(env.getProperty("jdbc.url"));
-		dataSource.setUsername(env.getProperty("jdbc.user"));
-		dataSource.setPassword(env.getProperty("jdbc.pass"));
+		dataSource.setUsername(env.getProperty("jdbc.username"));
+		dataSource.setPassword(env.getProperty("jdbc.password"));
 		return dataSource;
 	}
 	
