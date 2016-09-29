@@ -1,5 +1,6 @@
 package fr.naoj.spring.sandbox.config;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -78,14 +81,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .rememberMe()
+            	.useSecureCookie(false)
             	.rememberMeParameter("remember-me")
             	.tokenValiditySeconds(86400)
+            	.rememberMeServices(rememberMeServices())
             	.tokenRepository(persistentTokenRepository());
     }
     
     @Bean
     public SocialUserDetailsService socialUserDetailsService() {
     	return new SocialUserDetailServiceImpl(userDetailsService());
+    }
+    
+    @Bean
+    public RememberMeServices rememberMeServices() {
+    	RememberMeServices rememberMeService = new PersistentTokenBasedRememberMeServices("remember-me", userDetailsService, persistentTokenRepository()) {
+    		@Override
+    		protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
+    			String uri = request.getRequestURI();
+    			if (uri.matches("/auth/.*")) {
+    				return true;
+    			}
+    			return super.rememberMeRequested(request, parameter);
+    		}
+    	};
+    	return rememberMeService;
     }
     
     @Bean

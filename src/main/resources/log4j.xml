@@ -38,7 +38,7 @@
     </logger>
 
     <logger name="org.springframework.security">
-        <level value="error"/>
+        <level value="debug"/>
     </logger>
 
     <logger name="io.swagger.models.parameters.AbstractSerializableParameter">
