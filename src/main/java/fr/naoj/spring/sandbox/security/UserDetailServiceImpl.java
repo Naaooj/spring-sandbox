@@ -10,9 +10,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.social.security.SocialUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.naoj.spring.sandbox.persistence.entity.UserProfile;
 import fr.naoj.spring.sandbox.persistence.entity.Users;
 import fr.naoj.spring.sandbox.service.UserService;
 
@@ -32,7 +34,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		if (users == null) {
 			throw new UsernameNotFoundException("Username not found");
 		}
-		return new User(users.getUsername(), users.getPassword(), getGrantedAuthorities());
+		UserProfile userProfile = users.getUserProfile();
+		if (userProfile != null) {
+			return new SocialUser(users.getUsername(), users.getPassword(), getGrantedAuthorities());
+		} else {
+			return new User(users.getUsername(), users.getPassword(), getGrantedAuthorities());
+		}
 	}
 
 	private List<GrantedAuthority> getGrantedAuthorities() {
