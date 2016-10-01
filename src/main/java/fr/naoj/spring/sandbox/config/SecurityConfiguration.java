@@ -1,12 +1,14 @@
 package fr.naoj.spring.sandbox.config;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +17,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,8 +40,13 @@ import fr.naoj.spring.sandbox.social.SocialUserDetailServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	private static final String REMEMBER_ME_KEY = "spring.security.rememberMe.key";
+	
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private Environment environment;
 	
 	@Autowired
 	@Qualifier("sandboxUserDetailsService")
@@ -81,6 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .rememberMe()
+            	.key(environment.getProperty(REMEMBER_ME_KEY))
             	.useSecureCookie(false)
             	.rememberMeParameter("remember-me")
             	.tokenValiditySeconds(86400)
@@ -95,7 +105,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Bean
     public RememberMeServices rememberMeServices() {
-    	RememberMeServices rememberMeService = new PersistentTokenBasedRememberMeServices("remember-me", userDetailsService, persistentTokenRepository()) {
+    	RememberMeServices rememberMeService = new PersistentTokenBasedRememberMeServices(environment.getProperty(REMEMBER_ME_KEY), userDetailsService, persistentTokenRepository()) {
     		@Override
     		protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
     			String uri = request.getRequestURI();
@@ -103,6 +113,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     				return true;
     			}
     			return super.rememberMeRequested(request, parameter);
+    		}
+    		
+    		@Override
+    		protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request, HttpServletResponse response) {
+    			UserDetails userDetails = super.processAutoLoginCookie(cookieTokens, request, response);
+    			
+    			return userDetails;
+    		}
+    		
+    		@Override
+    		protected Authentication createSuccessfulAuthentication(HttpServletRequest request, UserDetails user) {
+    			Authentication auth = super.createSuccessfulAuthentication(request, user);
+    			
+    			return auth;
     		}
     	};
     	return rememberMeService;
