@@ -51,7 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource);
+        auth.jdbcAuthentication()
+        	.dataSource(dataSource)
+        	.usersByUsernameQuery("select username, password, enabled from users where username=?")
+        	.authoritiesByUsernameQuery("select username, authority from authorities where username=?");
         auth.authenticationProvider(authProvider());
     }
 	
@@ -63,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
+        	.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/index", "/auth/**", "/signin/**", "/signup/**").permitAll()
                 .antMatchers("/**").authenticated()

@@ -17,14 +17,13 @@ import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
-
-import fr.naoj.spring.sandbox.social.ConnectionSignUpService;
 
 /**
  * @author Johann Bernez
@@ -38,7 +37,7 @@ public class SocialConfiguration implements SocialConfigurer {
 	private DataSource dataSource;
 	
 	@Autowired
-	private ConnectionSignUpService connectionSignupService;
+	private ConnectionSignUp connectionSignupService;
 	
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfc, Environment env) {

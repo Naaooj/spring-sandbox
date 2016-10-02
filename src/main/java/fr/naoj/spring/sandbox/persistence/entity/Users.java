@@ -1,11 +1,14 @@
 package fr.naoj.spring.sandbox.persistence.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -29,9 +32,12 @@ public class Users implements Serializable {
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled = Boolean.TRUE;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	private UserProfile userProfile;
+	
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Authority> authorities;
 
 	public String getUsername() {
 		return username;
@@ -63,5 +69,13 @@ public class Users implements Serializable {
 
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
+	}
+
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 }
