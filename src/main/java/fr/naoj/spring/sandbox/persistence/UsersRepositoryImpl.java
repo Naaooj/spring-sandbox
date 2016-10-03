@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.naoj.spring.sandbox.model.Profile;
 import fr.naoj.spring.sandbox.persistence.entity.Authority;
+import fr.naoj.spring.sandbox.persistence.entity.Authority.AuthorityId;
 import fr.naoj.spring.sandbox.persistence.entity.UserProfile;
 import fr.naoj.spring.sandbox.persistence.entity.Users;
 
@@ -50,7 +51,7 @@ public class UsersRepositoryImpl implements UsersRepositoryExtension {
 		
 		// Creates the authority
 		final Authority auth = new Authority();
-		auth.setAuthority("ROLE_ADMIN");
+		auth.setId(new AuthorityId(username, "ROLE_ADMIN"));
 		
 		user.setUserProfile(userProfile);
 		user.setAuthorities(new ArrayList<>(1));

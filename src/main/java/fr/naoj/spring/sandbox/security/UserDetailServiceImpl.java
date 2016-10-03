@@ -30,21 +30,21 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	@Override
 	@Transactional(readOnly = false)
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		Users users = userService.findByUserName(userName);
-		if (users == null) {
+		Users user = userService.findByUserName(userName);
+		if (user == null) {
 			throw new UsernameNotFoundException("Username not found");
 		}
-		UserProfile userProfile = users.getUserProfile();
+		UserProfile userProfile = user.getUserProfile();
 		if (userProfile != null) {
-			return new SocialUser(users.getUsername(), users.getPassword(), getGrantedAuthorities());
+			return new SocialUser(user.getUsername(), user.getPassword(), getGrantedAuthorities(user));
 		} else {
-			return new User(users.getUsername(), users.getPassword(), getGrantedAuthorities());
+			return new User(user.getUsername(), user.getPassword(), getGrantedAuthorities(user));
 		}
 	}
 
-	private List<GrantedAuthority> getGrantedAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+	private List<GrantedAuthority> getGrantedAuthorities(Users user) {
+		final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		user.getAuthorities().forEach(auth -> new SimpleGrantedAuthority(auth.getId().getAuthority()));
 		return authorities;
 	}
 }
