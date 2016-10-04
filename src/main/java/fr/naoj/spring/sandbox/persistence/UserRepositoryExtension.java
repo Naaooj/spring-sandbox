@@ -5,7 +5,7 @@ import fr.naoj.spring.sandbox.model.Profile;
 /**
  * @author Johann Bernez
  */
-public interface UsersRepositoryExtension {
+public interface UserRepositoryExtension {
 
 	void createUser(Profile profile);
 }

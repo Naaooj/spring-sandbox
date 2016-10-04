@@ -4,14 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import fr.naoj.spring.sandbox.social.SocialType;
 
 /**
  * @author Johann Bernez
@@ -46,11 +42,7 @@ public class UserProfile implements Serializable {
 	
 	@OneToOne
 	@PrimaryKeyJoinColumn
-	private Users users;
-	
-	@Column(name = "socialtype")
-	@Enumerated(EnumType.STRING)
-	private SocialType socialType;
+	private User user;
 
 	public String getUserId() {
 		return userId;
@@ -108,19 +100,11 @@ public class UserProfile implements Serializable {
 		this.imageUrl = imageUrl;
 	}
 
-	public Users getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
-	public SocialType getSocialType() {
-		return socialType;
-	}
-
-	public void setSocialType(SocialType socialType) {
-		this.socialType = socialType;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

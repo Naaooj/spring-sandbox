@@ -1,11 +1,11 @@
 package fr.naoj.spring.sandbox.service;
 
-import fr.naoj.spring.sandbox.persistence.entity.Users;
+import fr.naoj.spring.sandbox.persistence.entity.User;
 
 /**
  * @author Johann Bernez
  */
 public interface UserService {
 
-	Users findByUserName(String userName);
+	User findByUserName(String userName);
 }

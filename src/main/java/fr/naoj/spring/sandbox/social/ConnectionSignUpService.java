@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.naoj.spring.sandbox.model.Profile;
-import fr.naoj.spring.sandbox.persistence.UsersRepository;
+import fr.naoj.spring.sandbox.model.SocialType;
+import fr.naoj.spring.sandbox.persistence.UserRepository;
 
 /**
  * @author Johann Bernez
@@ -24,7 +25,7 @@ public class ConnectionSignUpService implements ConnectionSignUp {
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectionSignUpService.class);
 	
 	@Autowired
-	private UsersRepository userRepository;
+	private UserRepository userRepository;
 	
 	@Override
 	@Transactional

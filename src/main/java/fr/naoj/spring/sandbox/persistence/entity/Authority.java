@@ -23,7 +23,7 @@ public class Authority implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
-	private Users users;
+	private User user;
 	
 	public AuthorityId getId() {
 		return id;
@@ -33,12 +33,12 @@ public class Authority implements Serializable {
 		this.id = id;
 	}
 
-	public Users getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(Users users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Embeddable

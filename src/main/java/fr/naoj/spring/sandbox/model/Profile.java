@@ -2,8 +2,6 @@ package fr.naoj.spring.sandbox.model;
 
 import org.springframework.social.connect.UserProfile;
 
-import fr.naoj.spring.sandbox.social.SocialType;
-
 /**
  * @author Johann Bernez
  */

@@ -16,6 +16,12 @@
       <column name="enabled" type="boolean">
         <constraints nullable="false"/>
       </column>
+      <column name="locked" type="boolean">
+        <constraints nullable="false"/>
+      </column>
+      <column name="type" type="varchar(12)">
+      	<constraints nullable="false"/>
+      </column>
     </createTable>
     
     <createTable tableName="authorities">
@@ -89,7 +95,6 @@
       <column name="name" type="varchar(64)"/>
       <column name="username" type="varchar(64)"/>
       <column name="imageurl" type="varchar(512)"/>
-      <column name="socialtype" type="varchar(12)"/>
     </createTable>
     
     <createIndex tableName="userprofile" indexName="ix_user_profile_pk" unique="true">
@@ -100,6 +105,8 @@
     	<column name="username" value="admin"/>
     	<column name="password" value="$2a$10$CNQCn7J927VCk.1XLOoWXeQV6hnfwgzeBeoh9.aMHKY3qspzMddxK"/>
     	<column name="enabled" value="true"/>
+    	<column name="locked" value="false"/>
+    	<column name="type" value="NATIVE"/>
     </insert>
   </changeSet>
 </databaseChangeLog>

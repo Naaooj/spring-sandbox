@@ -13,13 +13,13 @@ import fr.naoj.spring.sandbox.model.Profile;
 import fr.naoj.spring.sandbox.persistence.entity.Authority;
 import fr.naoj.spring.sandbox.persistence.entity.Authority.AuthorityId;
 import fr.naoj.spring.sandbox.persistence.entity.UserProfile;
-import fr.naoj.spring.sandbox.persistence.entity.Users;
+import fr.naoj.spring.sandbox.persistence.entity.User;
 
 /**
  * @author Johann Bernez
  */
 @Repository
-public class UsersRepositoryImpl implements UsersRepositoryExtension {
+public class UserRepositoryImpl implements UserRepositoryExtension {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -33,10 +33,10 @@ public class UsersRepositoryImpl implements UsersRepositoryExtension {
 		final String password = passwordEncoder.encode(RandomStringUtils.randomAlphanumeric(8));
 
 		// Creates the user
-		final Users user = new Users();
+		final User user = new User();
 		user.setUsername(username);
 		user.setPassword(password);
-		user.setEnabled(Boolean.TRUE);
+		user.setType(profile.getSocialType());
 		
 		// Creates the profile
 		final UserProfile userProfile = new UserProfile();
@@ -47,7 +47,6 @@ public class UsersRepositoryImpl implements UsersRepositoryExtension {
 		userProfile.setName(profile.getUserProfile().getName());
 		userProfile.setUsername(profile.getUserProfile().getUsername());
 		userProfile.setImageUrl(profile.getImageUrl());
-		userProfile.setSocialType(profile.getSocialType());
 		
 		// Creates the authority
 		final Authority auth = new Authority();
