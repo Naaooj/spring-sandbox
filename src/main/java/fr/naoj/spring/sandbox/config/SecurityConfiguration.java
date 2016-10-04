@@ -100,7 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Bean
     public SocialUserDetailsService socialUserDetailsService() {
-    	return new SocialUserDetailServiceImpl(userDetailsService());
+    	return new SocialUserDetailServiceImpl(userDetailsService);
     }
     
     @Bean

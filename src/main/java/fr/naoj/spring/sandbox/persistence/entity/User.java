@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import fr.naoj.spring.sandbox.model.SocialType;
+import fr.naoj.spring.sandbox.model.UserType;
 
 /**
  * @author Johann Bernez
@@ -41,7 +41,7 @@ public class User implements Serializable {
 
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
-	private SocialType type;
+	private UserType type;
 	
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -82,11 +82,11 @@ public class User implements Serializable {
 		this.locked = locked;
 	}
 
-	public SocialType getType() {
+	public UserType getType() {
 		return type;
 	}
 
-	public void setType(SocialType type) {
+	public void setType(UserType type) {
 		this.type = type;
 	}
 

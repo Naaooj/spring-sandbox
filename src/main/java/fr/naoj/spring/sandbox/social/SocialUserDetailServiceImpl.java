@@ -1,11 +1,11 @@
 package fr.naoj.spring.sandbox.social;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
+
+import fr.naoj.spring.sandbox.model.SandboxUser;
 
 /**
  * @author Johann Bernez
@@ -20,7 +20,7 @@ public class SocialUserDetailServiceImpl implements SocialUserDetailsService {
 	
 	@Override
 	public SocialUserDetails loadUserByUserId(String userName) throws UsernameNotFoundException {
-		UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
-		return new SocialUser(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+		SandboxUser userDetails = (SandboxUser) this.userDetailsService.loadUserByUsername(userName);
+		return userDetails;
 	}
 }

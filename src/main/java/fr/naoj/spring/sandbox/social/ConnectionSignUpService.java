@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.naoj.spring.sandbox.model.Profile;
-import fr.naoj.spring.sandbox.model.SocialType;
+import fr.naoj.spring.sandbox.model.UserType;
 import fr.naoj.spring.sandbox.persistence.UserRepository;
 
 /**
@@ -31,18 +31,18 @@ public class ConnectionSignUpService implements ConnectionSignUp {
 	@Transactional
 	public String execute(final Connection<?> connection) {
 		final String userId = UUID.randomUUID().toString();
-		final SocialType socialType = getSocialType(connection);
+		final UserType socialType = getSocialType(connection);
         final Profile profile = new Profile(userId, connection.fetchUserProfile(), connection.getImageUrl(), socialType);
         userRepository.createUser(profile);
         LOG.debug(String.format("User with id [%s] and email [%s] has been created", userId, profile.getUserProfile().getEmail()));
         return userId;
 	}
 	
-	private SocialType getSocialType(final Connection<?> connection) {
+	private UserType getSocialType(final Connection<?> connection) {
 		if (connection.getApi() instanceof Google) {
-			return SocialType.GOOGLE;
+			return UserType.GOOGLE;
 		} else if (connection.getApi() instanceof Twitter) {
-			return SocialType.TWITTER;
+			return UserType.TWITTER;
 		} else {
 			return null;
 		}

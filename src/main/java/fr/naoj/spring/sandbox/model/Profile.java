@@ -10,9 +10,9 @@ public class Profile {
 	private final String uuid;
 	private final UserProfile userProfile;
 	private final String imageUrl;
-	private final SocialType socialType;
+	private final UserType socialType;
 	
-	public Profile(final String uuid, final UserProfile userProfile, final String imageUrl, final SocialType socialType) {
+	public Profile(final String uuid, final UserProfile userProfile, final String imageUrl, final UserType socialType) {
 		this.uuid = uuid;
 		this.userProfile = userProfile;
 		this.imageUrl = imageUrl;
@@ -31,7 +31,7 @@ public class Profile {
 		return imageUrl;
 	}
 	
-	public SocialType getSocialType() {
+	public UserType getSocialType() {
 		return socialType;
 	}
 }
