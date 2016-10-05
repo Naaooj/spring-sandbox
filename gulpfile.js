@@ -16,7 +16,7 @@ gulp.task('bower', function() {
 
 gulp.task('icons', function() {
 	return gulp
-		.src(config.bowerDir + '/fontawesome/fonts/**.*')
+		.src(config.bowerDir + '/font-awesome/fonts/**.*')
 		.pipe(gulp.dest(config.resources + '/fonts'));
 });
 
@@ -30,7 +30,8 @@ gulp.task('js', function() {
 	return gulp
 		.src([
 			config.bowerDir + '/jquery/dist/jquery.min.js',
-			config.bowerDir + '/bootstrap/dist/js/bootstrap.min.js'
+			config.bowerDir + '/bootstrap/dist/js/bootstrap.min.js',
+			config.bowerDir + '/bootstrap-material-design/dist/js/material.min.js'
 		])
 		.pipe(gulp.dest(config.resources + '/js'));
 })
@@ -41,7 +42,8 @@ gulp.task('css', function() {
     	outputStyle: 'compressed',
         includePaths: [
         	config.bowerDir + '/bootstrap-sass/assets/stylesheets',
-        	config.bowerDir + '/font-awesome/scss'
+        	config.bowerDir + '/font-awesome/scss',
+        	config.bowerDir + '/bootstrap-material-design/scss'
         	]
     	})
         .on("error", notify.onError(function(error) {

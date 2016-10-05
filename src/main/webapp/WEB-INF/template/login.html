@@ -19,14 +19,7 @@
 					<form class="form-horizontal" name="f" th:action="@{/authenticate}" method="post">
 						<fieldset>
 							<legend>Please Login before accessing any content</legend>
-							<p>
-								<a th:href="@{/auth/google}" class="btn btn-primary btn-xs">Google</a>
-							</p>
-							
-							<p>
-								<a th:href="@{/auth/twitter}" class="btn btn-primary btn-xs">Twitter</a>
-							</p>
-							
+														
 							<div th:if="${param.error}" class="alert alert-error">Invalid username and password.</div>
 							<div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
 							<div class="form-group">
@@ -52,6 +45,9 @@
 								</div>
 							</div>
 							<div th:include="fragment/exception :: errorInfo"></div>
+							<div>
+								Don't have an account? <a th:href="@{/signup}">Signup!</a>
+							</div>
 						</fieldset>
 					</form>
 				</div>

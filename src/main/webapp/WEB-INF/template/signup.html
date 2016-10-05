@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+<title>Signup</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../resources/css/style.css" rel="stylesheet" th:href="@{/resources/css/style.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div layout:fragment="content" class="well col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6">
+				<div class="well-heading well-primary">
+                	<h1>Signup with your accounts</h1>
+                </div>
+				<div class="row">
+					<div class="col-xs-offset-4 col-xs-2"><a th:href="@{/auth/google}" class="btn btn-fab btn-fab-google"><i class="fa fa-google"></i></a></div>
+					<div class="col-xs-1"><a th:href="@{/auth/twitter}" class="btn btn-fab btn-fab-twitter"><i class="fa fa-twitter"></i></a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

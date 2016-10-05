@@ -5,8 +5,20 @@ $font-family-base: 'Raleway', sans-serif;
 // Import bootstrap and fontawesome
 @import "bootstrap";
 @import "font-awesome";
+@import "variables";
 
 // Bootstrap Starter Template Styles
 body {
 	padding-top: 0;
+}
+
+.btn-fab-google:not(.btn-link):not(.btn-flat) {
+	background-color: $fab-google-bgcolor;
+	color: #ffffff;
+	padding: 12px;
+}
+.btn-fab-twitter:not(.btn-link):not(.btn-flat) {
+	background-color: $fab-twitter-bgcolor;
+	color: #ffffff;
+	padding: 12px;
 }
