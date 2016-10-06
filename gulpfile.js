@@ -43,7 +43,7 @@ gulp.task('css', function() {
         includePaths: [
         	config.bowerDir + '/bootstrap-sass/assets/stylesheets',
         	config.bowerDir + '/font-awesome/scss',
-        	config.bowerDir + '/bootstrap-material-design/scss'
+        	config.bowerDir + '/bootstrap-material-design/sass'
         	]
     	})
         .on("error", notify.onError(function(error) {
