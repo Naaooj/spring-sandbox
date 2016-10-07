@@ -2,6 +2,7 @@ package fr.naoj.spring.sandbox.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,13 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String index(HttpServletRequest request, Model model) {
+		
 		Throwable throwable = (Throwable) request.getSession().getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-		model.addAttribute("exception", throwable == null ? null : throwable.getMessage());
+		if (throwable instanceof BadCredentialsException) {
+			model.addAttribute("error", Boolean.TRUE);
+		} else {
+			model.addAttribute("exception", throwable == null ? null : throwable.getMessage());
+		}
 		
 		return "login";
 	}

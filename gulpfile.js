@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	notify = require("gulp-notify"),
-	bower = require('gulp-bower');
+	bower = require('gulp-bower'),
+    findup = require('findup-sync');
 
 var config = {
 	sassPath: './src/main/resources/sass',
@@ -31,7 +32,8 @@ gulp.task('js', function() {
 		.src([
 			config.bowerDir + '/jquery/dist/jquery.min.js',
 			config.bowerDir + '/bootstrap/dist/js/bootstrap.min.js',
-			config.bowerDir + '/bootstrap-material-design/dist/js/material.min.js'
+            config.bowerDir + '/tether/dist/js/tether.min.js',
+			config.bowerDir + '/bootstrap-material-design/dist/bootstrap-material-design.iife.min.js'
 		])
 		.pipe(gulp.dest(config.resources + '/js'));
 })
@@ -39,11 +41,12 @@ gulp.task('js', function() {
 gulp.task('css', function() {
     return gulp.src(config.sassPath + '/style.scss')
     .pipe(sass({
-    	outputStyle: 'compressed',
+//    	outputStyle: 'compressed',
         includePaths: [
-        	config.bowerDir + '/bootstrap-sass/assets/stylesheets',
+            findup('node_modules'),
+        	config.bowerDir + '/bootstrap/scss',
         	config.bowerDir + '/font-awesome/scss',
-        	config.bowerDir + '/bootstrap-material-design/sass'
+        	config.bowerDir + '/bootstrap-material-design/scss'
         	]
     	})
         .on("error", notify.onError(function(error) {

@@ -3,7 +3,6 @@
 $font-family-base: 'Raleway', sans-serif;
 
 // Import bootstrap and fontawesome
-@import "bootstrap";
 @import "font-awesome";
 @import "bootstrap-material-design";
 @import "variables";
@@ -24,7 +23,6 @@ body {
 	padding: 12px;
 }
 
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px white inset;
-    -webkit-text-fill-color: red !important;
+h4 {
+	margin: 0;
 }

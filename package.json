@@ -4,6 +4,8 @@
     "gulp-bower": "0.0.13",
     "gulp-notify": "^2.2.0",
     "gulp-ruby-sass": "^2.1.0",
-    "gulp-sass": "^2.3.2"
+    "gulp-sass": "^2.3.2",
+    "findup-sync": "0.4.2",
+    "bootstrap": "4.0.0-alpha.4"
   }
 }
