@@ -41,7 +41,7 @@ gulp.task('js', function() {
 gulp.task('css', function() {
     return gulp.src(config.sassPath + '/style.scss')
     .pipe(sass({
-//    	outputStyle: 'compressed',
+    	outputStyle: 'compressed',
         includePaths: [
             findup('node_modules'),
         	config.bowerDir + '/bootstrap/scss',

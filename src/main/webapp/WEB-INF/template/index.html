@@ -7,16 +7,19 @@
 	</head>
 <body>
 	<div layout:fragment="content">
-		<div class="jumbotron text-center">
-			<h1 th:text="#{sandbox.title}">Sandbox</h1>
-			<p th:text="#{sandbox.description}">Sandbox description</p>
+		<div class="container">
+			<div class="jumbotron text-center">
+				<h1 th:text="#{sandbox.title}">Sandbox</h1>
+				<p th:text="#{sandbox.description}">Sandbox description</p>
+			</div>
 		</div>
-		
-		<div id="login" class="container-fluid">
-			<div class="row">
-				<div class="col-sm-12">
-					<p>Welcome <span th:text="${user}">user</span>, you are now logged in!</p> 
-					<p><a th:href="@{/logout}">logout</a></p>
+		<div class="container">
+			<div id="index" class="container-fluid">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>Welcome <span th:text="${user}">user</span>, you are now logged in!</p> 
+						<p><a th:href="@{/logout}">Logout</a></p>
+					</div>
 				</div>
 			</div>
 		</div>

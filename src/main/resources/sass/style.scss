@@ -2,6 +2,8 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,700,300);
 $font-family-base: 'Raleway', sans-serif;
 
+$brand-primary: #b54500;
+
 // Import bootstrap and fontawesome
 @import "font-awesome";
 @import "bootstrap-material-design";
@@ -23,6 +25,11 @@ body {
 	padding: 12px;
 }
 
-h4 {
+.remember-me {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+h5 {
 	margin: 0;
 }
