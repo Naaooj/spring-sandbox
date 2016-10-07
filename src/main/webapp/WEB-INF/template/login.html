@@ -17,9 +17,8 @@
 		<div class="container">
 			<div id="login" class="container-fluid">
 				<div class="row">
-					<div class="col-offset-4 col-4">
+					<div class="col-lg-6">
 						<form name="f" th:action="@{/authenticate}" method="post" autocomplete="false">
-							<input type="hidden" name="lsd" value="AVr-WNkJ" autocomplete="off">
 							<fieldset>
 								<legend>Please Login before accessing any content</legend>
 		
@@ -53,6 +52,15 @@
 								</div>
 							</fieldset>
 						</form>
+					</div>
+					<div class="col-lg-6">
+						<fieldset>
+							<legend>Or signup with your favorite accounts</legend>
+							<div class="row">
+								<div class="offset-xs-4 col-xs-2"><a th:href="@{/auth/google}" class="btn bmd-btn-fab btn-fab-google"><i class="fa fa-google"></i></a></div>
+								<div class="col-xs-1"><a th:href="@{/auth/twitter}" class="btn bmd-btn-fab btn-fab-twitter"><i class="fa fa-twitter"></i></a></div>
+							</div>
+						</fieldset>
 					</div>
 				</div>
 			</div>
