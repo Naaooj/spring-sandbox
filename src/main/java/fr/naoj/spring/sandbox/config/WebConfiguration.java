@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -71,7 +73,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Servlet
 	@Bean
 	public MessageSource messageSource() {
 		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("i18n.messages");
+		messageSource.setBasenames("i18n.messages", "i18n.validation");
 		return messageSource;
 	}
 	
@@ -90,5 +92,17 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Servlet
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	}
+
+	@Override
+	public Validator getValidator() {
+		return localValidator();
+	}
+
+	@Bean
+	public LocalValidatorFactoryBean localValidator() {
+		final LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+		localValidatorFactoryBean.setValidationMessageSource(messageSource());
+		return localValidatorFactoryBean;
 	}
 }

@@ -38,6 +38,16 @@ h5 {
 	margin-top: 30px;
 }
 
-.filler {
+.filler:after {
+	content: " ";
+	display:block;
+	padding-top: 30px;
 	background-image: linear-gradient(to top, $brand-primary 2px, rgba(181,69,0,0) 2px), linear-gradient(to top, rgba(0,0,0,0.26) 1px, transparent 1px);
+}
+
+.form-group .form-control-feedback {
+    display: none;
+}
+.has-danger .form-control-feedback {
+    display: block;
 }

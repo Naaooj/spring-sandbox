@@ -24,7 +24,8 @@
 		<liquibase.version>3.5.2</liquibase.version>
 		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
 		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
-
+        <validation.api.version>1.1.0.Final</validation.api.version>
+        <hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
         <junit.version>4.12</junit.version>
 		<testcontainers.version>1.1.6</testcontainers.version>
 	</properties>
@@ -190,6 +191,18 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquibase.version}</version>
 		</dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
+        </dependency>
 
         <!-- JUnit -->
         <dependency>

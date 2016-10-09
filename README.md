@@ -1,6 +1,15 @@
 # Spring Sandbox
 
 Project aimed at testing various frameworks, all around Spring.
+Below it the list of what is included:
+* Spring MVC
+* Spring Social
+* Hibernate
+* Spring Data JPA
+* Spring Test
+* Thymeleaf
+* Liquibase
+* Bean Validation
 
 ## Configuration
 To build and run the project, you have to:

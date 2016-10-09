@@ -14,43 +14,46 @@
 						<h4 class="card-title">
 	                		Register a new account
 						</h4>
-						<div class="inputs">
-							<div class="filler">&nbsp;</div>
-							<div class="form-group label-float">
-								<label for="username" class="bmd-label-floating">Email</label> 
-								<input type="text" id="username" class="form-control" name="email" value=""/>
-								<span class="bmd-help">Enter your email</span>
+						<form name="signup" th:action="@{/signup}" th:object="${signup}" method="post">
+							<div class="inputs">
+								<div class="form-group label-float" th:class="${#fields.hasErrors('email')} ? 'has-danger' : 'form-group label-float'">
+									<label for="email" class="bmd-label-floating">Email</label>
+									<input type="text" id="email" class="form-control" th:field="*{email}"/>
+									<small class="bmd-help">Enter your email</small>
+									<span th:errors="*{email}" class="form-control-feedback"/>
+								</div>
+								<div class="form-group label-float" th:class="${#fields.hasErrors('password')} ? 'has-danger' : 'form-group label-float'">
+									<label for="password" class="bmd-label-floating">Password</label>
+									<input type="password" id="password" class="form-control" th:field="*{password}"/>
+									<small class="bmd-help">Enter your password</small>
+									<span th:errors="*{password}" class="form-control-feedback"/>
+								</div>
+								<div class="form-group label-float filler">
+									<label for="password-confirmation" class="bmd-label-floating">Password confirmation</label>
+									<input type="password" id="password-confirmation" class="form-control" name="passwordConfirmation" value=""/>
+									<div class="form-control-feedback">You have entered a wrong password</div>
+									<small class="bmd-help">Confirm your password</small>
+								</div>
+								<div class="form-group label-float">
+									<label for="firstname" class="bmd-label-floating">Firstname</label>
+									<input type="text" id="firstname" class="form-control" name="firstname" value=""/>
+									<span class="bmd-help">Enter your firstname</span>
+								</div>
+								<div class="form-group label-float">
+									<label for="lastname" class="bmd-label-floating">Lastname</label>
+									<input type="text" id="lastname" class="form-control" name="lastname" value=""/>
+									<span class="bmd-help">Enter your lastname</span>
+								</div>
+								<div class="form-group label-float">
+									<label for="phone" class="bmd-label-floating">Phone</label>
+									<input type="text" id="phone" class="form-control" name="phone" value=""/>
+									<span class="bmd-help">Enter your phone</span>
+								</div>
+								<div class="form-group margin-top">
+									<button type="submit" class="btn btn-raised btn-primary">Create account</button>
+								</div>
 							</div>
-							<div class="form-group label-float">
-								<label for="password" class="bmd-label-floating">Password</label> 
-								<input type="password" id="password" class="form-control" name="password" value=""/>
-								<span class="bmd-help">Enter your password</span>
-							</div>
-							<div class="form-group label-float">
-								<label for="password-confirmation" class="bmd-label-floating">Password confirmation</label> 
-								<input type="password" id="password-confirmation" class="form-control" name="passwordConfirmation" value=""/>
-								<span class="bmd-help">Confirm your password</span>
-							</div>
-							<div class="filler margin-top">&nbsp;</div>
-							<div class="form-group label-float">
-								<label for="firstname" class="bmd-label-floating">Firstname</label> 
-								<input type="text" id="firstname" class="form-control" name="firstname" value=""/>
-								<span class="bmd-help">Enter your firstname</span>
-							</div>
-							<div class="form-group label-float">
-								<label for="lastname" class="bmd-label-floating">Lastname</label> 
-								<input type="text" id="lastname" class="form-control" name="lastname" value=""/>
-								<span class="bmd-help">Enter your lastname</span>
-							</div>
-							<div class="form-group label-float">
-								<label for="phone" class="bmd-label-floating">Phone</label> 
-								<input type="text" id="phone" class="form-control" name="phone" value=""/>
-								<span class="bmd-help">Enter your phone</span>
-							</div>
-							<div class="form-group margin-top">
-								<button type="submit" class="btn btn-raised btn-primary">Create account</button>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
