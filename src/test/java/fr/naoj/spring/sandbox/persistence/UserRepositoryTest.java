@@ -1,5 +1,8 @@
 package fr.naoj.spring.sandbox.persistence;
 
+import fr.naoj.spring.sandbox.model.Profile;
+import fr.naoj.spring.sandbox.model.UserType;
+import fr.naoj.spring.sandbox.persistence.entity.User;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -11,23 +14,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.social.connect.UserProfile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.DockerComposeContainer;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Johann Bernez
  */
 @ContextConfiguration()
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RepositoryTest {
+public class UserRepositoryTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RepositoryTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryTest.class);
 
     /** Defines the name of the service, must be the same as in the docker compose file, suffixed with _1 */
     private static final String SERVICE_NAME = "postgres_1";
@@ -44,9 +52,7 @@ public class RepositoryTest {
             .withExposedService(SERVICE_NAME, SERVICE_PORT);
 
     @Autowired
-    private DataSource dataSource;
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private UserRepository userRepository;
 
     @Before
     public void setUp() {
@@ -56,8 +62,19 @@ public class RepositoryTest {
     }
 
     @Test
+    @Transactional
     public void testRepository() {
+        final String userId = UUID.randomUUID().toString();
+        final String email = "john.doe@gmail.com";
+        UserProfile userProfile = new UserProfile(userId, "John Doe", "John", "Doe", email, userId);
+        Profile profile = new Profile(userId, userProfile, null, UserType.GOOGLE);
+        userRepository.createUser(profile);
 
+        User user = userRepository.findByUsername(userId);
+        assertNotNull(user);
+
+        assertEquals(UserType.GOOGLE, user.getType());
+        assertEquals(email, user.getUserProfile().getEmail());
     }
 
     /**
