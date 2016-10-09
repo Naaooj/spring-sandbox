@@ -5,6 +5,8 @@ src/main/webapp/resources/
 target/
 .project
 .classpath
-.settings
+.settings/
+.idea/
 RemoteSystemsTempFiles/
 .metadata/
+spring-sandbox.iml

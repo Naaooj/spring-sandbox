@@ -24,6 +24,9 @@
 		<liquibase.version>3.5.2</liquibase.version>
 		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
 		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
+
+        <junit.version>4.12</junit.version>
+		<testcontainers.version>1.1.6</testcontainers.version>
 	</properties>
 
 	<dependencyManagement>
@@ -187,9 +190,38 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquibase.version}</version>
 		</dependency>
+
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+		<!-- Testcontainers -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>${testcontainers.version}</version>
+            <scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </testResource>
+        </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
