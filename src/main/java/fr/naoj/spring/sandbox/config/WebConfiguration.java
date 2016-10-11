@@ -1,9 +1,6 @@
 package fr.naoj.spring.sandbox.config;
 
-import java.util.Locale;
-
-import javax.servlet.ServletContext;
-
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,7 +23,8 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
-import nz.net.ultraq.thymeleaf.LayoutDialect;
+import javax.servlet.ServletContext;
+import java.util.Locale;
 
 /**
  * @author Johann Bernez

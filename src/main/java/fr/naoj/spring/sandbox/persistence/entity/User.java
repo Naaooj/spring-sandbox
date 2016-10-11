@@ -39,7 +39,7 @@ public class User implements Serializable {
 	@Column(name = "locked", nullable = false)
 	private Boolean locked = Boolean.FALSE;
 
-	@Column(name = "type")
+	@Column(name = "type", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private UserType type;
 	
