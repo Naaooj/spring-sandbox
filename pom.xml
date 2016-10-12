@@ -30,6 +30,7 @@
         <junit.version>4.12</junit.version>
         <testcontainers.version>1.1.6</testcontainers.version>
         <javax.mail.api.version>1.5.6</javax.mail.api.version>
+        <javax.mail.version>1.5.6</javax.mail.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +64,12 @@
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>${javax.mail.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
         </dependency>
 
         <!-- Spring core -->

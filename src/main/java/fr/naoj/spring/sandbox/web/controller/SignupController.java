@@ -1,5 +1,6 @@
 package fr.naoj.spring.sandbox.web.controller;
 
+import fr.naoj.spring.sandbox.event.OnRegistrationCompleteEvent;
 import fr.naoj.spring.sandbox.model.Signup;
 import fr.naoj.spring.sandbox.persistence.entity.User;
 import fr.naoj.spring.sandbox.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -39,9 +41,9 @@ public class SignupController {
 		return "signup";
 	}
 
-	@Transactional
+    @Transactional
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup(@Valid @ModelAttribute Signup signupModel, BindingResult result, Map<String, Object> model) {
+	public String signup(@Valid @ModelAttribute Signup signupModel, BindingResult result, final HttpServletRequest request) {
 		if (result.hasErrors()) {
 			LOG.info("Signup form has error(s)");
 			return "signup";
@@ -50,8 +52,14 @@ public class SignupController {
 		final User createdUser = userService.createUser(signupModel);
 		if (createdUser == null) {
 			result.rejectValue("email", "email.error.already.registered");
+		} else {
+			eventPublisher.publishEvent(new OnRegistrationCompleteEvent(createdUser, getUrl(request), request.getLocale()));
 		}
 
 		return "signup";
+	}
+
+	private String getUrl(HttpServletRequest request) {
+		return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 	}
 }

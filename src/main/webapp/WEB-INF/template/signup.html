@@ -34,15 +34,17 @@
 									<div class="form-control-feedback">You have entered a wrong password</div>
 									<small class="bmd-help">Confirm your password</small>
 								</div>
-								<div class="form-group label-float">
+								<div class="form-group label-float" th:class="${#fields.hasErrors('firstname')} ? 'has-danger' : 'form-group label-float'">
 									<label for="firstname" class="bmd-label-floating">Firstname</label>
 									<input type="text" id="firstname" class="form-control" th:field="*{firstname}" value=""/>
 									<span class="bmd-help">Enter your firstname</span>
+									<span th:errors="*{firstname}" class="form-control-feedback"/>
 								</div>
-								<div class="form-group label-float">
+								<div class="form-group label-float" th:class="${#fields.hasErrors('lastname')} ? 'has-danger' : 'form-group label-float'">
 									<label for="lastname" class="bmd-label-floating">Lastname</label>
 									<input type="text" id="lastname" class="form-control" th:field="*{lastname}" value=""/>
 									<span class="bmd-help">Enter your lastname</span>
+									<span th:errors="*{lastname}" class="form-control-feedback"/>
 								</div>
 								<div class="form-group label-float">
 									<label for="phone" class="bmd-label-floating">Phone</label>

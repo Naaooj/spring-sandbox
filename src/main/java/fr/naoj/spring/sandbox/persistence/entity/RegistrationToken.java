@@ -14,7 +14,8 @@ import java.util.Date;
 public class RegistrationToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registration_token_seq")
+    @SequenceGenerator(name = "registration_token_seq", sequenceName = "registration_token_id_seq")
     private Long id;
 
     @Column(name = "token")
@@ -29,6 +30,7 @@ public class RegistrationToken {
     private User user;
 
     public RegistrationToken() {
+        super();
     }
 
     public RegistrationToken(final User user, final String token) {

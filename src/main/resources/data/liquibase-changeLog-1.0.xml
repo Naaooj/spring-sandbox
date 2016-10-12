@@ -37,6 +37,8 @@
       <column name="username"/>
       <column name="authority"/>
     </createIndex>
+
+    <addPrimaryKey columnNames="username, authority" tableName="authorities"/>
     
     <createTable tableName="persistent_logins">
       <column name="series" type="varchar(64)">
