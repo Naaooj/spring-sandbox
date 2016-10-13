@@ -18,12 +18,12 @@ public class SandboxUser extends SocialUser {
 	private final String displayName;
 	
 	public SandboxUser(final User user, final List<GrantedAuthority> authorities) {
-		super(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, !user.getLocked(), authorities);
+		super(user.getEmail(), user.getPassword(), user.getEnabled(), true, true, !user.getLocked(), authorities);
 		this.type = user.getType();
 		
 		switch (this.type) {
 			case NATIVE:
-				this.displayName = user.getUsername();
+				this.displayName = user.getEmail();
 				break;
 			case GOOGLE:
 				this.displayName = user.getUserProfile().getFirstname() + " " + user.getUserProfile().getLastname();
@@ -32,7 +32,7 @@ public class SandboxUser extends SocialUser {
 				this.displayName = user.getUserProfile().getUsername();
 				break;
 			default:
-				this.displayName = user.getUsername();
+				this.displayName = user.getEmail();
 		}
 	}
 

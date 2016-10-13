@@ -64,13 +64,12 @@ public class UserRepositoryTest {
     @Test
     @Transactional
     public void testRepository() {
-        final String userId = UUID.randomUUID().toString();
         final String email = "john.doe@gmail.com";
-        UserProfile userProfile = new UserProfile(userId, "John Doe", "John", "Doe", email, userId);
-        Profile profile = new Profile(userId, userProfile, null, UserType.GOOGLE);
+        UserProfile userProfile = new UserProfile(email, "John Doe", "John", "Doe", email, null);
+        Profile profile = new Profile(email, userProfile, null, UserType.GOOGLE);
         userRepository.createUser(profile);
 
-        User user = userRepository.findByUsername(userId);
+        User user = userRepository.findByEmail(email);
         assertNotNull(user);
 
         assertEquals(UserType.GOOGLE, user.getType());

@@ -7,20 +7,20 @@ import org.springframework.social.connect.UserProfile;
  */
 public class Profile {
 
-	private final String uuid;
+	private final String email;
 	private final UserProfile userProfile;
 	private final String imageUrl;
 	private final UserType socialType;
 	
-	public Profile(final String uuid, final UserProfile userProfile, final String imageUrl, final UserType socialType) {
-		this.uuid = uuid;
+	public Profile(final String email, final UserProfile userProfile, final String imageUrl, final UserType socialType) {
+		this.email = email;
 		this.userProfile = userProfile;
 		this.imageUrl = imageUrl;
 		this.socialType = socialType;
 	}
 
-	public String getUuid() {
-		return uuid;
+	public String getEmail() {
+		return email;
 	}
 
 	public UserProfile getUserProfile() {

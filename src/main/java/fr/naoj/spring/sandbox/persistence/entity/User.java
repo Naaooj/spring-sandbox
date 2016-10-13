@@ -27,8 +27,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "username", unique = true, nullable = false)
-	private String username;
+	@Column(name = "email", unique = true, nullable = false)
+	private String email;
 
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -50,12 +50,12 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Authority> authorities;
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

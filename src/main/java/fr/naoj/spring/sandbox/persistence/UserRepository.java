@@ -9,5 +9,5 @@ import fr.naoj.spring.sandbox.persistence.entity.User;
  */
 public interface UserRepository extends CrudRepository<User, String>, UserRepositoryExtension {
 	
-	User findByUsername(String username);
+	User findByEmail(String email);
 }

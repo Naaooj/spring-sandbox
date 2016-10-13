@@ -22,7 +22,7 @@ public class Authority implements Serializable {
 	private AuthorityId id;
 	
 	@ManyToOne
-	@JoinColumn(name = "username", referencedColumnName = "username", insertable = false, updatable = false)
+	@JoinColumn(name = "email", referencedColumnName = "email", insertable = false, updatable = false)
 	private User user;
 	
 	public AuthorityId getId() {
@@ -46,25 +46,25 @@ public class Authority implements Serializable {
 		
 		private static final long serialVersionUID = 1L;
 		
-		private String username;
+		private String email;
 		private String authority;
 		
 		public AuthorityId() {
 			super();
 		}
 		
-		public AuthorityId(String username, String authority) {
+		public AuthorityId(String email, String authority) {
 			super();
-			this.username = username;
+			this.email = email;
 			this.authority = authority;
 		}
 
-		public String getUsername() {
-			return username;
+		public String getEmail() {
+			return email;
 		}
 
-		public void setUsername(String username) {
-			this.username = username;
+		public void setEmail(String email) {
+			this.email = email;
 		}
 
 		public String getAuthority() {

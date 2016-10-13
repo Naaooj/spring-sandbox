@@ -1,12 +1,9 @@
 package fr.naoj.spring.sandbox.persistence;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import javax.persistence.EntityManager;
 
-import fr.naoj.spring.sandbox.model.Signup;
-import fr.naoj.spring.sandbox.model.UserType;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,12 +29,12 @@ public class UserRepositoryImpl implements UserRepositoryExtension {
 	
 	@Override
 	public User createUser(Profile profile) {
-		final String username = profile.getUuid();
+		final String username = profile.getEmail();
 		final String password = passwordEncoder.encode(RandomStringUtils.randomAlphanumeric(8));
 
 		// Creates the user
 		final User user = new User();
-		user.setUsername(username);
+		user.setEmail(username);
 		user.setPassword(password);
 		user.setType(profile.getSocialType());
 		
@@ -54,7 +51,6 @@ public class UserRepositoryImpl implements UserRepositoryExtension {
 
     private void createUserProfile(User user, Profile profile) {
         final UserProfile userProfile = new UserProfile();
-        userProfile.setUserId(profile.getUuid());
         userProfile.setEmail(profile.getUserProfile().getEmail());
         userProfile.setFirstname(profile.getUserProfile().getFirstName());
         userProfile.setLastname(profile.getUserProfile().getLastName());
