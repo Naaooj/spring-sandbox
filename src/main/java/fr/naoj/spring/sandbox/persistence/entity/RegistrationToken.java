@@ -26,7 +26,7 @@ public class RegistrationToken {
     private Date expirationDate;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "username", foreignKey = @ForeignKey(name = "fk_username"))
+    @JoinColumn(nullable = false, name = "email", foreignKey = @ForeignKey(name = "fk_email"))
     private User user;
 
     public RegistrationToken() {

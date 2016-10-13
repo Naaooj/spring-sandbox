@@ -2,6 +2,7 @@ package fr.naoj.spring.sandbox.service;
 
 import fr.naoj.spring.sandbox.model.Profile;
 import fr.naoj.spring.sandbox.model.Signup;
+import fr.naoj.spring.sandbox.model.TokenStatus;
 import fr.naoj.spring.sandbox.model.UserType;
 import fr.naoj.spring.sandbox.persistence.RegistrationTokenRepository;
 import fr.naoj.spring.sandbox.persistence.UserProfileRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -53,8 +55,40 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public void createRegistrationToker(User user, String token) {
+    public void createRegistrationToken(User user, String token) {
         final RegistrationToken registrationToken = new RegistrationToken(user, token);
         registrationTokenRepository.save(registrationToken);
+    }
+
+    @Override
+    public TokenStatus confirmRegistrationToken(String token) {
+        final RegistrationToken registrationToken = registrationTokenRepository.findByToken(token);
+        if (registrationToken == null) {
+            return TokenStatus.INVALID;
+        } else {
+            final User user = registrationToken.getUser();
+            if (registrationToken.getExpirationDate().getTime() - Calendar.getInstance().getTime().getTime() <= 0) {
+                return TokenStatus.EXPIRED;
+            } else {
+                user.setEnabled(true);
+                registrationTokenRepository.delete(registrationToken);
+                userRepository.save(user);
+                return TokenStatus.VALID;
+            }
+        }
+    }
+
+    @Override
+    public RegistrationToken regenerateToken(final String token) {
+        final RegistrationToken registrationToken = registrationTokenRepository.findByToken(token);
+        if (registrationToken == null) {
+            return null;
+        } else {
+            final RegistrationToken newToken = new RegistrationToken(registrationToken.getUser(), UUID.randomUUID().toString());
+            registrationToken.setExpirationDate(newToken.getExpirationDate());
+            registrationToken.setToken(newToken.getToken());
+            registrationTokenRepository.save(registrationToken);
+            return registrationToken;
+        }
     }
 }

@@ -3,6 +3,7 @@ package fr.naoj.spring.sandbox.config;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import fr.naoj.spring.sandbox.persistence.SandboxJdbcTokenRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -74,7 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
             	.loginPage("/login")
                 .loginProcessingUrl("/authenticate")
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 .permitAll()
                 .and()
@@ -120,7 +121,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
-    	JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+    	SandboxJdbcTokenRepositoryImpl jdbcTokenRepository = new SandboxJdbcTokenRepositoryImpl();
     	jdbcTokenRepository.setDataSource(dataSource);
     	return jdbcTokenRepository;
     }

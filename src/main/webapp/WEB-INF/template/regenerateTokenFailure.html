@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+    <title>Invalid activation link</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="../resources/css/style.css" rel="stylesheet" th:href="@{/resources/css/style.css}" />
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row margin-top">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        Invalid activation link!
+                    </h4>
+                    <p class="card-text">Your validation link is not valid.</p>
+                    <p class="card-text">Return to <a th:href="@{/login}">login page.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

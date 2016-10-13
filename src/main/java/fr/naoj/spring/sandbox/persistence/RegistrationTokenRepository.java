@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Johann Bernez
  */
 public interface RegistrationTokenRepository extends JpaRepository<RegistrationToken, Long> {
+
+    RegistrationToken findByToken(String token);
 }

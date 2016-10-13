@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+<head>
+    <title>Signup success</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="../resources/css/style.css" rel="stylesheet" th:href="@{/resources/css/style.css}" />
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row margin-top">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">
+                        Thank you for the registration!
+                    </h4>
+                    <p class="card-text">Congratulation, you are now registered. You should receive an email with your activation link in a few minutes.</p>
+                    <p class="card-text">Click on the link to finalise your subscription.</p>
+                    <p class="card-text">Return to <a th:href="@{/login}">login page.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

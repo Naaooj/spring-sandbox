@@ -33,12 +33,12 @@
             </column>
         </createTable>
 
-        <createIndex tableName="authorities" indexName="ix_auth_username" unique="true">
+        <createIndex tableName="authorities" indexName="ix_auth_email" unique="true">
             <column name="email"/>
             <column name="authority"/>
         </createIndex>
 
-        <addPrimaryKey columnNames="username, authority" tableName="authorities"/>
+        <addPrimaryKey columnNames="email, authority" tableName="authorities"/>
 
         <createTable tableName="persistent_logins">
             <column name="series" type="varchar(64)">
@@ -120,8 +120,8 @@
             <column name="expiration_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="username" type="varchar(64)">
-                <constraints nullable="false" foreignKeyName="fk_username"/>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" foreignKeyName="fk_email"/>
             </column>
         </createTable>
     </changeSet>

@@ -35,7 +35,7 @@ public class RegistrationCompleteListener implements ApplicationListener<OnRegis
     public void onApplicationEvent(OnRegistrationCompleteEvent onRegistrationCompleteEvent) {
         final User user = onRegistrationCompleteEvent.getUser();
         final String token = UUID.randomUUID().toString();
-        userService.createRegistrationToker(user, token);
+        userService.createRegistrationToken(user, token);
 
         final SimpleMailMessage mailMessage = createMessage(onRegistrationCompleteEvent, user.getUserProfile().getEmail(), token);
         mailSender.send(mailMessage);
@@ -44,7 +44,7 @@ public class RegistrationCompleteListener implements ApplicationListener<OnRegis
     private SimpleMailMessage createMessage(final OnRegistrationCompleteEvent event, final String email, final String token) {
         final String recipientAddress = email;
         final String subject = messageSource.getMessage("registration.subject", null, event.getLocale());
-        final String confirmationUrl = event.getUrl() + "/confirmRegistration?token=" + token;
+        final String confirmationUrl = event.getUrl() + "/signup/confirmRegistration?token=" + token;
         final String message = messageSource.getMessage("registration.succeeded", null, event.getLocale());
         final SimpleMailMessage emailMessage = new SimpleMailMessage();
         emailMessage.setTo(recipientAddress);
