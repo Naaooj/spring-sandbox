@@ -1,7 +1,7 @@
 package fr.naoj.spring.sandbox.web.controller;
 
 import fr.naoj.spring.sandbox.event.OnRegistrationCompleteEvent;
-import fr.naoj.spring.sandbox.model.Signup;
+import fr.naoj.spring.sandbox.model.SignupModel;
 import fr.naoj.spring.sandbox.persistence.entity.User;
 import fr.naoj.spring.sandbox.service.UserService;
 import org.slf4j.Logger;
@@ -37,15 +37,15 @@ public class SignupController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
-		model.addAttribute("signup", new Signup());
+		model.addAttribute("signup", new SignupModel());
 		return "signup";
 	}
 
     @Transactional
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signup(@Valid @ModelAttribute Signup signupModel, BindingResult result, final HttpServletRequest request) {
+	public String signup(@Valid @ModelAttribute SignupModel signupModel, BindingResult result, final HttpServletRequest request) {
 		if (result.hasErrors()) {
-			LOG.info("Signup form has error(s)");
+			LOG.info("SignupModel form has error(s)");
 			return "signup";
 		}
 

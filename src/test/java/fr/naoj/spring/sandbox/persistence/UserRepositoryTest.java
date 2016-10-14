@@ -1,13 +1,15 @@
 package fr.naoj.spring.sandbox.persistence;
 
-import fr.naoj.spring.sandbox.model.EnabledProfile;
+import fr.naoj.spring.sandbox.model.DisabledProfile;
 import fr.naoj.spring.sandbox.model.Profile;
 import fr.naoj.spring.sandbox.model.UserType;
 import fr.naoj.spring.sandbox.persistence.entity.User;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.social.connect.UserProfile;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
  */
 @ContextConfiguration()
 @RunWith(SpringJUnit4ClassRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserRepositoryTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryTest.class);
@@ -42,6 +46,8 @@ public class UserRepositoryTest {
 
     /** Defines the port of the service */
     private static final Integer SERVICE_PORT = 5432;
+
+    private static final String EMAIL = "john.doe@gmail.com";
 
     /**
      * Creates a new generic container for all the method, use @Rule for creating
@@ -63,17 +69,22 @@ public class UserRepositoryTest {
 
     @Test
     @Transactional
-    public void testRepository() {
-        final String email = "john.doe@gmail.com";
-        UserProfile userProfile = new UserProfile(email, "John Doe", "John", "Doe", email, null);
-        Profile profile = new EnabledProfile(email, userProfile, null, UserType.GOOGLE);
-        userRepository.createUser(profile);
-
-        User user = userRepository.findByEmail(email);
+    @Commit
+    public void testInsert() {
+        UserProfile userProfile = new UserProfile(EMAIL, "John Doe", "John", "Doe", EMAIL, null);
+        Profile profile = new DisabledProfile(EMAIL, userProfile, null, UserType.GOOGLE);
+        final User user = userRepository.createUser(profile);
         assertNotNull(user);
+    }
 
+    @Test
+    public void testSearch() {
+        final User user = userRepository.findByEmail(EMAIL);
+
+        assertNotNull(user);
         assertEquals(UserType.GOOGLE, user.getType());
-        assertEquals(email, user.getUserProfile().getEmail());
+        assertEquals(EMAIL, user.getUserProfile().getEmail());
+        assertEquals(Boolean.FALSE, user.getEnabled());
     }
 
     /**

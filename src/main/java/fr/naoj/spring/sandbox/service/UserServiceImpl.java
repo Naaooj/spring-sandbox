@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User createUser(@NotNull Signup signup) {
+	public User createUser(@NotNull SignupModel signup) {
         final Optional<?> existingUserProfile = userProfileRepository.findByEmail(signup.getEmail());
         if (existingUserProfile.isPresent()) {
             return null;

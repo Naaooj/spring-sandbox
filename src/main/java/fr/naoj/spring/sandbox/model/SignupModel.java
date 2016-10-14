@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 /**
  * @author Johann Bernez
  */
-public class Signup {
+public class SignupModel {
 
     @NotNull
     @NotEmpty(message = "{email.error.empty}")

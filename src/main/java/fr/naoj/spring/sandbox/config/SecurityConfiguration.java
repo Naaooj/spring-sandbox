@@ -1,6 +1,8 @@
 package fr.naoj.spring.sandbox.config;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import fr.naoj.spring.sandbox.persistence.SandboxJdbcTokenRepositoryImpl;
@@ -17,9 +19,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
@@ -29,6 +33,8 @@ import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import fr.naoj.spring.sandbox.social.SocialUserDetailServiceImpl;
+
+import java.io.IOException;
 
 /**
  * @author Johann Bernez
@@ -81,7 +87,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
             .apply(new SpringSocialConfigurer()
                 .postLoginUrl("/")
-                .defaultFailureUrl("/#/login")
+                .defaultFailureUrl("/login")
                 .alwaysUsePostLoginUrl(true))
                 .and()
             .logout()
@@ -138,4 +144,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+	@Bean
+	public AuthenticationFailureHandler failureHandler() {
+		return new AuthenticationFailureHandler() {
+			@Override
+			public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+				System.out.println("error");
+			}
+		};
+	}
 }
