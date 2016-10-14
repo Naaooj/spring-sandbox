@@ -2,7 +2,6 @@ package fr.naoj.spring.sandbox.service;
 
 import fr.naoj.spring.sandbox.model.Signup;
 import fr.naoj.spring.sandbox.model.TokenStatus;
-import fr.naoj.spring.sandbox.persistence.entity.RegistrationToken;
 import fr.naoj.spring.sandbox.persistence.entity.User;
 
 import javax.validation.constraints.NotNull;
@@ -30,5 +29,5 @@ public interface UserService {
 
 	TokenStatus confirmRegistrationToken(String token);
 
-    RegistrationToken regenerateToken(String token);
+    User regenerateToken(String token);
 }

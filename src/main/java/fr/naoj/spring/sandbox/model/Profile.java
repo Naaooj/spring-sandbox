@@ -5,33 +5,14 @@ import org.springframework.social.connect.UserProfile;
 /**
  * @author Johann Bernez
  */
-public class Profile {
+public interface Profile {
+    boolean isEnabled();
 
-	private final String email;
-	private final UserProfile userProfile;
-	private final String imageUrl;
-	private final UserType socialType;
-	
-	public Profile(final String email, final UserProfile userProfile, final String imageUrl, final UserType socialType) {
-		this.email = email;
-		this.userProfile = userProfile;
-		this.imageUrl = imageUrl;
-		this.socialType = socialType;
-	}
+    String getEmail();
 
-	public String getEmail() {
-		return email;
-	}
+    UserProfile getUserProfile();
 
-	public UserProfile getUserProfile() {
-		return userProfile;
-	}
+    String getImageUrl();
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	
-	public UserType getSocialType() {
-		return socialType;
-	}
+    UserType getSocialType();
 }

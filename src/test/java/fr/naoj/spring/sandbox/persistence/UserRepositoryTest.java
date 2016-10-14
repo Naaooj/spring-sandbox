@@ -1,5 +1,6 @@
 package fr.naoj.spring.sandbox.persistence;
 
+import fr.naoj.spring.sandbox.model.EnabledProfile;
 import fr.naoj.spring.sandbox.model.Profile;
 import fr.naoj.spring.sandbox.model.UserType;
 import fr.naoj.spring.sandbox.persistence.entity.User;
@@ -23,7 +24,6 @@ import org.testcontainers.containers.DockerComposeContainer;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -66,7 +66,7 @@ public class UserRepositoryTest {
     public void testRepository() {
         final String email = "john.doe@gmail.com";
         UserProfile userProfile = new UserProfile(email, "John Doe", "John", "Doe", email, null);
-        Profile profile = new Profile(email, userProfile, null, UserType.GOOGLE);
+        Profile profile = new EnabledProfile(email, userProfile, null, UserType.GOOGLE);
         userRepository.createUser(profile);
 
         User user = userRepository.findByEmail(email);

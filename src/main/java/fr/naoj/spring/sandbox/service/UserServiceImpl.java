@@ -1,9 +1,6 @@
 package fr.naoj.spring.sandbox.service;
 
-import fr.naoj.spring.sandbox.model.Profile;
-import fr.naoj.spring.sandbox.model.Signup;
-import fr.naoj.spring.sandbox.model.TokenStatus;
-import fr.naoj.spring.sandbox.model.UserType;
+import fr.naoj.spring.sandbox.model.*;
 import fr.naoj.spring.sandbox.persistence.RegistrationTokenRepository;
 import fr.naoj.spring.sandbox.persistence.UserProfileRepository;
 import fr.naoj.spring.sandbox.persistence.UserRepository;
@@ -17,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Johann Bernez
@@ -47,9 +43,8 @@ public class UserServiceImpl implements UserService {
         if (existingUserProfile.isPresent()) {
             return null;
         } else {
-            final String userId = UUID.randomUUID().toString();
-            final UserProfile userProfile = new UserProfile(userId, signup.getFirstname() + " " + signup.getLastname(), signup.getFirstname(), signup.getLastname(), signup.getEmail(), null);
-            final Profile profile = new Profile(userId, userProfile, null, UserType.NATIVE);
+            final UserProfile userProfile = new UserProfile(signup.getEmail(), signup.getFirstname() + " " + signup.getLastname(), signup.getFirstname(), signup.getLastname(), signup.getEmail(), null);
+            final Profile profile = new DisabledProfile(signup.getEmail(), userProfile, null, UserType.NATIVE);
             return userRepository.createUser(profile);
         }
 	}
@@ -79,16 +74,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RegistrationToken regenerateToken(final String token) {
+    public User regenerateToken(final String token) {
         final RegistrationToken registrationToken = registrationTokenRepository.findByToken(token);
         if (registrationToken == null) {
             return null;
         } else {
-            final RegistrationToken newToken = new RegistrationToken(registrationToken.getUser(), UUID.randomUUID().toString());
-            registrationToken.setExpirationDate(newToken.getExpirationDate());
-            registrationToken.setToken(newToken.getToken());
-            registrationTokenRepository.save(registrationToken);
-            return registrationToken;
+            final User user = registrationToken.getUser();
+            registrationTokenRepository.delete(registrationToken);
+            return user;
         }
     }
 }

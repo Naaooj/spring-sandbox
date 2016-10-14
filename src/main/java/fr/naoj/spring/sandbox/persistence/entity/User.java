@@ -34,7 +34,7 @@ public class User implements Serializable {
 	private String password;
 	
 	@Column(name = "enabled", nullable = false)
-	private Boolean enabled = Boolean.TRUE;
+	private Boolean enabled;
 	
 	@Column(name = "locked", nullable = false)
 	private Boolean locked = Boolean.FALSE;

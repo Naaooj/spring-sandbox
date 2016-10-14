@@ -1,19 +1,17 @@
 package fr.naoj.spring.sandbox.persistence;
 
-import java.util.ArrayList;
-
-import javax.persistence.EntityManager;
-
+import fr.naoj.spring.sandbox.model.Profile;
+import fr.naoj.spring.sandbox.persistence.entity.Authority;
+import fr.naoj.spring.sandbox.persistence.entity.Authority.AuthorityId;
+import fr.naoj.spring.sandbox.persistence.entity.User;
+import fr.naoj.spring.sandbox.persistence.entity.UserProfile;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import fr.naoj.spring.sandbox.model.Profile;
-import fr.naoj.spring.sandbox.persistence.entity.Authority;
-import fr.naoj.spring.sandbox.persistence.entity.Authority.AuthorityId;
-import fr.naoj.spring.sandbox.persistence.entity.UserProfile;
-import fr.naoj.spring.sandbox.persistence.entity.User;
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
 
 /**
  * @author Johann Bernez
@@ -36,6 +34,7 @@ public class UserRepositoryImpl implements UserRepositoryExtension {
 		final User user = new User();
 		user.setEmail(username);
 		user.setPassword(password);
+        user.setEnabled(profile.isEnabled());
 		user.setType(profile.getSocialType());
 		
 		// Creates the profile

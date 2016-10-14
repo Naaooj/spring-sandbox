@@ -1,7 +1,9 @@
 package fr.naoj.spring.sandbox.social;
 
-import java.util.UUID;
-
+import fr.naoj.spring.sandbox.model.EnabledProfile;
+import fr.naoj.spring.sandbox.model.Profile;
+import fr.naoj.spring.sandbox.model.UserType;
+import fr.naoj.spring.sandbox.persistence.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,7 @@ import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.naoj.spring.sandbox.model.Profile;
-import fr.naoj.spring.sandbox.model.UserType;
-import fr.naoj.spring.sandbox.persistence.UserRepository;
+import java.util.UUID;
 
 /**
  * @author Johann Bernez
@@ -32,7 +32,7 @@ public class ConnectionSignUpService implements ConnectionSignUp {
 	public String execute(final Connection<?> connection) {
 		final String userId = UUID.randomUUID().toString();
 		final UserType socialType = getSocialType(connection);
-        final Profile profile = new Profile(userId, connection.fetchUserProfile(), connection.getImageUrl(), socialType);
+        final Profile profile = new EnabledProfile(userId, connection.fetchUserProfile(), connection.getImageUrl(), socialType);
         userRepository.createUser(profile);
         LOG.debug(String.format("User with id [%s] and email [%s] has been created", userId, profile.getUserProfile().getEmail()));
         return userId;

@@ -2,8 +2,6 @@ package fr.naoj.spring.sandbox.web.controller;
 
 import fr.naoj.spring.sandbox.event.OnRegistrationCompleteEvent;
 import fr.naoj.spring.sandbox.model.Signup;
-import fr.naoj.spring.sandbox.model.TokenStatus;
-import fr.naoj.spring.sandbox.persistence.entity.RegistrationToken;
 import fr.naoj.spring.sandbox.persistence.entity.User;
 import fr.naoj.spring.sandbox.service.UserService;
 import org.slf4j.Logger;
@@ -80,9 +78,9 @@ public class SignupController {
 
     @RequestMapping(value = "/signup/regenerateToken", method = RequestMethod.GET)
     public String regenerateToken(@RequestParam("token") final String token, final Model model, final HttpServletRequest request) {
-        final RegistrationToken registrationToken = userService.regenerateToken(token);
-        if (registrationToken != null) {
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registrationToken.getUser(), getUrl(request), request.getLocale()));
+        final User user = userService.regenerateToken(token);
+        if (user != null) {
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, getUrl(request), request.getLocale()));
             return "regenerateTokenSuccess";
         } else {
             return "regenerateTokenFailure";
